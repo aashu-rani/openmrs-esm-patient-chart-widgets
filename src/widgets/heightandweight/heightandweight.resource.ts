@@ -1,4 +1,4 @@
-import { openmrsObservableFetch, fhirConfig } from "@openmrs/esm-api";
+import { openmrsObservableFetch, fhirBaseUrl } from "@openmrs/esm-api";
 import { map } from "rxjs/operators";
 import { formatDate, calculateBMI } from "./heightandweight-helper";
 
@@ -13,7 +13,7 @@ export function getDimensions(patientId: string) {
 
 function getDimensionsObservations(patientId: string) {
   return openmrsObservableFetch(
-    `${fhirConfig.baseUrl}/Observation?subject:Patient=${patientId}&code=${WEIGHT_CONCEPT},${HEIGHT_CONCEPT}`
+    `${fhirBaseUrl}/Observation?subject:Patient=${patientId}&code=${WEIGHT_CONCEPT},${HEIGHT_CONCEPT}`
   ).pipe(
     map(({ data }) => data["entry"]),
     map((entries: []) => entries.map((entry: any) => entry.resource)),

@@ -1,7 +1,7 @@
 import {
   openmrsObservableFetch,
   openmrsFetch,
-  fhirConfig
+  fhirBaseUrl
 } from "@openmrs/esm-api";
 import { Observable } from "rxjs";
 import { map, take } from "rxjs/operators";
@@ -33,7 +33,7 @@ export function performPatientsVitalsSearch(
   patientID: string
 ): Observable<PatientVitals[]> {
   return openmrsObservableFetch(
-    `${fhirConfig.baseUrl}/Observation?subject:Patient=${patientID}&code=${SYSTOLIC_BLOOD_PRESSURE_CONCEPT},${DIASTOLIC_BLOOD_PRESSURE_CONCEPT},${PULSE_CONCEPT},${TEMPERATURE_CONCEPT},${OXYGENATION_CONCEPT}`
+    `${fhirBaseUrl}/Observation?subject:Patient=${patientID}&code=${SYSTOLIC_BLOOD_PRESSURE_CONCEPT},${DIASTOLIC_BLOOD_PRESSURE_CONCEPT},${PULSE_CONCEPT},${TEMPERATURE_CONCEPT},${OXYGENATION_CONCEPT}`
   ).pipe(
     map(({ data }) => data["entry"]),
     map((entries = []) => entries.map(entry => entry.resource)),
